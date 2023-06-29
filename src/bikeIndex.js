@@ -40,15 +40,14 @@ export default class BikeIndex {
         }
     }
 
+    
+
     static filterBikesByDateRange(bikes, unixStartDate, unixEndDate) {
-        let count = 0;
-        bikes.forEach((bike) => {
+        const filteredBikes = bikes.filter((bike) => {
             const bikeDate = bike.date_stolen;
-            if (bikeDate >= unixStartDate && bikeDate <= unixEndDate) {
-                count++;
-            }
+            return bikeDate >= unixStartDate && bikeDate <= unixEndDate;
         });
-        return count;
+        return filteredBikes;
     }
     
 
