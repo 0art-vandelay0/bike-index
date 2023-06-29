@@ -23,8 +23,8 @@ async function getBikeByDateRange(location, startDate, endDate) {
 
         if (response.stolen) {
             if (Array.isArray(response.bikes)) {
-                const count = BikeIndex.filterBikesByDateRange(response.bikes, unixStartDate, unixEndDate);
-                printDateRangeElements(count, location, startDate, endDate);  // Use the count variable here
+                const filteredBikes = BikeIndex.filterBikesByDateRange(response.bikes, unixStartDate, unixEndDate);
+                printDateRangeElements(filteredBikes, location, startDate, endDate);
             } else {
                 printError('Invalid response format', location);
             }
@@ -53,11 +53,28 @@ function printElements(response, location) {
     document.getElementById("response").innerHTML = `The response is ${response} for ${location}.`;
 }
 
-function printDateRangeElements(count, location, startDate, endDate) {
+function printDateRangeElements(filteredBikes, location, startDate, endDate) {
     const formattedStartDate = startDate.toLocaleDateString();
     const formattedEndDate = endDate.toLocaleDateString();
 
-    document.getElementById("response2").innerHTML = `There are ${count} stolen bikes in ${location} between ${formattedStartDate} and ${formattedEndDate}.`;
+    let html = '';
+
+    if (filteredBikes.length > 0) {
+        html += `<p>There are ${filteredBikes.length} stolen bikes in ${location} between ${formattedStartDate} and ${formattedEndDate}:</p>`;
+        html += '<ul>';
+        filteredBikes.forEach((bike) => {
+            const stolenDate = new Date(bike.date_stolen * 1000).toLocaleDateString();
+            html += `<li>Date Stolen: ${stolenDate}</li>`;
+            html += `<li>Stolen Location: ${bike.stolen_location}</li>`;
+            html += `<li>Frame Model: ${bike.frame_model}</li>`;
+            html += '<br>';
+        });
+        html += '</ul>';
+    } else {
+        html = `<p>No stolen bikes found in ${location} between ${formattedStartDate} and ${formattedEndDate}.</p>`;
+    }
+
+    document.getElementById("response2").innerHTML = html;
 }
 
 function printError(error, location) {
