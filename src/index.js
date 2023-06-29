@@ -23,8 +23,8 @@ async function getBikeByDateRange(location, startDate, endDate) {
 
         if (response.stolen) {
             if (Array.isArray(response.bikes)) {
-                const filteredBikes = BikeIndex.filterBikesByDateRange(response.bikes, unixStartDate, unixEndDate);
-                printDateRangeElements(filteredBikes.length, location, startDate, endDate);
+                const count = BikeIndex.filterBikesByDateRange(response.bikes, unixStartDate, unixEndDate);
+                printDateRangeElements(count, location, startDate, endDate);  // Use the count variable here
             } else {
                 printError('Invalid response format', location);
             }
@@ -35,6 +35,7 @@ async function getBikeByDateRange(location, startDate, endDate) {
         printError(error.message, location);
     }
 }
+
 
 
 function toUnixTimestamp(date) {
@@ -77,8 +78,8 @@ function handleFormSubmit(event) {
     let startDate, endDate;
 
     if (startDateString && endDateString) {
-        startDate = new Date(startDateString);
-        endDate = new Date(endDateString);
+        startDate = new Date(startDateString + ":00.000Z");
+        endDate = new Date(endDateString + ":00.000Z");
 
         console.log("StartDate:", startDate);
         console.log("EndDate:", endDate);
