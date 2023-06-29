@@ -6,19 +6,23 @@
 </head>
 
 <body>
-    <h3>Enter your zipcode and see how many stolen bikes are registered.</h3>
-    <form id="bikeCount-form">
-        <label for="location-input">Enter your zipcode:</label>
-        <input id="location-input" type="text">
-        <h4> Date Range: </h4>
-        <label for="start-date-input">Occured after: </label>
-        <input id="start-date-input" type="datetime-local">
-        <label for="end-date-input">Occured after: </label>
-        <input id="end-date-input" type="datetime-local">
-        <button type="submit">Submit</button>
-    </form>
-    <ul id="response"></ul>
-    <ul id="response2"></ul>
+    <h3>Register Stolen Bikes by Location</h3>
+    <div id="form-div">
+        <form id="bikeCount-form">
+            <label for="location-input">Enter your zipcode (if left blank, your current IP will be used):</label><br>
+            <input id="location-input" type="text">
+            <h4> Date Range: </h4>
+            <label for="start-date-input">Occured after: </label><br>
+            <input id="start-date-input" type="datetime-local" required><br>
+            <label for="end-date-input">Occured after: </label><br>
+            <input id="end-date-input" type="datetime-local" required><br>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <div id="response-div" class="hidden">
+        <ul id="response"></ul>
+        <ul id="response2"></ul>
+    </div>
 </body>
 
 </html>
