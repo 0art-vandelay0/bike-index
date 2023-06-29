@@ -114,6 +114,7 @@ function handleFormSubmit(event) {
     } else {
         getBikeByCount(location);
     }
+    document.getElementById("response-div").removeAttribute("class", "hidden");
 }
 
 window.addEventListener("load", function(){
